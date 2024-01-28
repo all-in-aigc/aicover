@@ -1,0 +1,17 @@
+@baseUri = http://127.0.0.1:3000/api 
+
+### generate cover
+POST {{baseUri}}/gen-cover
+Content-Type: application/json
+
+{
+    "description": "a red car named Tesla"
+}
+
+### get covers
+POST {{baseUri}}/get-covers
+Content-Type: application/json
+
+{
+    
+}

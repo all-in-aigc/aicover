@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Cover
 
-## Getting Started
+AI Cover Generator by [aicover.design](https://aicover.design)
 
-First, run the development server:
+## Live Demo
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[https://aicover.design](https://aicover.design)
+
+![demo](./preview.png)
+
+## Quick Start
+
+1. clone project
+
+```shell
+git clone https://github.com/all-in-aigc/aicover
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```shell
+cd aicover
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. init database
 
-## Learn More
+create your database use [local postgres](https://wiki.postgresql.org/wiki/Homebrew) or [vercel-postgres](https://vercel.com/docs/storage/vercel-postgres) or [supabase](https://supabase.com/)
 
-To learn more about Next.js, take a look at the following resources:
+create tables from sql at `data/install.sql`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. set environmental values
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+put `.env.local` under `aicover` root dir with values list below
 
-## Deploy on Vercel
+```
+OPENAI_API_KEY=""
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+POSTGRES_URL=""
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+AWS_AK=""
+AWS_SK=""
+AWS_REGION=""
+AWS_BUCKET=""
+
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=""
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+
+STRIPE_PUBLIC_KEY=""
+STRIPE_PRIVATE_KEY=""
+
+WEB_BASE_URI=""
+```
+
+5. local development
+
+```shell
+pnpm dev
+```
+
+open `http://localhost:3000` for preview
+
+## Credit to
+
+- [aiwallpaper](https://aiwallpaper.shop) for code reference
+- [nextjs](https://nextjs.org/docs) for full-stack development
+- [clerk](https://clerk.com/docs/quickstarts/nextjs) for user auth
+- [aws s3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/upload-objects.html) for image storage
+- [stripe](https://stripe.com/docs/development) for payment
+- [node-postgres](https://node-postgres.com/) for data processing
+- [tailwindcss](https://tailwindcss.com/) for page building
+
+## Other Things
+
+you can contact me at Twitter: https://twitter.com/idoubicc
+
+if this project is helpful to you, buy be a coffee.
+
+<a href="https://www.buymeacoffee.com/idoubi" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
