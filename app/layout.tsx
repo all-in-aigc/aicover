@@ -2,6 +2,7 @@ import "./globals.css";
 
 import { Toaster, toast } from "sonner";
 
+import { Analytics } from "@vercel/analytics/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
@@ -26,6 +27,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <Toaster position="top-center" richColors />
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
