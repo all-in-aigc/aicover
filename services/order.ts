@@ -39,27 +39,18 @@ export async function getUserCredits(user_email: string): Promise<UserCredits> {
     user_credits.used_credits = Number(used_credits);
 
     const orders = await getUserOrders(user_email);
-    if (!orders) {
-      return user_credits;
+    if (orders) {
+      orders.forEach((order: Order) => {
+        if (order.plan === "monthly") {
+          user_credits.monthly_credits += order.credits;
+        } else {
+          user_credits.one_time_credits += order.credits;
+        }
+        user_credits.total_credits += order.credits;
+      });
     }
 
-    let monthly_credits = 0;
-    let one_time_credits = 0;
-    let total_credits = 0;
-
-    orders.forEach((order: Order) => {
-      if (order.plan === "monthly") {
-        monthly_credits += order.credits;
-      } else {
-        one_time_credits += order.credits;
-      }
-      total_credits += order.credits;
-    });
-
-    user_credits.monthly_credits = monthly_credits;
-    user_credits.one_time_credits = one_time_credits;
-    user_credits.total_credits = total_credits;
-    user_credits.left_credits = total_credits - used_credits;
+    user_credits.left_credits = user_credits.total_credits - used_credits;
     if (user_credits.left_credits < 0) {
       user_credits.left_credits = 0;
     }
