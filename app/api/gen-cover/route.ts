@@ -67,6 +67,7 @@ export async function POST(req: Request) {
       llm_params: JSON.stringify(llm_params),
       created_at: created_at,
       uuid: genUuid(),
+      status: 1,
     };
     await insertCover(cover);
 

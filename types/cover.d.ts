@@ -11,4 +11,5 @@ export interface Cover {
   created_at: string;
   created_user?: User;
   uuid: string;
+  status: number;
 }
