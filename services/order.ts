@@ -30,8 +30,8 @@ export async function getUserCredits(user_email: string): Promise<UserCredits> {
     one_time_credits: 1,
     monthly_credits: 0,
     total_credits: 1,
-    used_credits: 1,
-    left_credits: 0,
+    used_credits: 0,
+    left_credits: 1,
   };
 
   try {
