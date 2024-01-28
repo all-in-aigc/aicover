@@ -9,7 +9,13 @@ export default function () {
   const { user } = useContext(AppContext);
 
   const navigations: Nav[] = [
-    { name: "pricing", title: "价格", url: "/pricing" },
+    { name: "pricing", title: "价格", url: "/pricing", target: "_self" },
+    {
+      name: "doc",
+      title: "定制微信红包封面",
+      url: "https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1",
+      target: "_blank",
+    },
   ];
 
   return (
@@ -18,8 +24,12 @@ export default function () {
         <nav className="font-inter mx-auto h-auto w-full max-w-[1600px] lg:relative lg:top-0">
           <div className="flex flex-row items-center px-6 py-8 lg:flex-row lg:items-center lg:justify-between lg:px-10 lg:py-8 xl:px-20">
             <a href="/" className="text-xl font-medium flex items-center">
-              🧧
-              <span className="font-bold text-primary text-2xl ml-1">
+              <img
+                src="/logo.png"
+                className="w-8 h-8 rounded-full mr-2"
+                alt="logo"
+              />
+              <span className="font-bold text-primary text-2xl">
                 AI 红包封面
               </span>
             </a>
@@ -27,9 +37,10 @@ export default function () {
             <div className="hidden md:flex ml-16">
               {navigations.map((tab: Nav, idx: number) => (
                 <a
+                  className="text-md font-normal leading-6 text-gray-800 mx-4"
                   key={idx}
                   href={tab.url}
-                  className="text-md font-normal leading-6 text-gray-800"
+                  target={tab.target}
                 >
                   {tab.title}
                 </a>

@@ -8,6 +8,7 @@ import Image from "next/image";
 
 export default function () {
   const { covers, setCovers } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const fetchCovers = async (page: number) => {
     try {
@@ -16,6 +17,7 @@ export default function () {
         limit: 30,
       };
 
+      setLoading(true);
       const resp = await fetch("/api/get-covers", {
         method: "POST",
         headers: {
@@ -25,7 +27,7 @@ export default function () {
       });
 
       const { code, message, data } = await resp.json();
-      console.log("covers", data);
+      setLoading(false);
 
       if (data) {
         setCovers(data);
@@ -49,29 +51,35 @@ export default function () {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:gap-12">
-          {covers &&
-            covers.map((cover: Cover, idx: number) => {
-              return (
-                <div
-                  key={idx}
-                  className="relative overflow-hidden max-w-[280px] mx-auto"
-                >
-                  <Image
-                    src={cover.img_url}
-                    alt={cover.img_description}
-                    width="280"
-                    height="420"
-                    className="w-full rounded-lg"
-                  />
+          {loading ? (
+            <div className="text-center mx-auto">loading...</div>
+          ) : (
+            <>
+              {covers &&
+                covers.map((cover: Cover, idx: number) => {
+                  return (
+                    <div
+                      key={idx}
+                      className="relative overflow-hidden max-w-[280px] mx-auto cursor-pointer"
+                    >
+                      <Image
+                        src={cover.img_url}
+                        alt={cover.img_description}
+                        width="280"
+                        height="420"
+                        className="w-full rounded-lg"
+                      />
 
-                  <img
-                    src="/hb_bottom.png"
-                    className="absolute bottom-0"
-                    alt=""
-                  />
-                </div>
-              );
-            })}
+                      <img
+                        src="/hb_bottom.png"
+                        className="absolute bottom-0"
+                        alt=""
+                      />
+                    </div>
+                  );
+                })}
+            </>
+          )}
         </div>
       </div>
     </section>
