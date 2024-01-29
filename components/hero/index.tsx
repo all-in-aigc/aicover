@@ -1,11 +1,16 @@
-export default function () {
+import { getCoversCount } from "@/models/cover";
+
+export default async function () {
+  const covers_count = await getCoversCount();
+
   return (
     <section className="max-w-3xl mx-auto text-center">
       <h1 className="text-6xl font-bold text-primary mt-8 md:mt-24">
-        AI 红包封面
+        2024 新年快乐
       </h1>
       <h2 className="text-4xl my-8 text-secondary-foreground">
-        使用 AI 技术生成精美的微信红包封面
+        <span className="text-primary">{covers_count}</span> 张使用 AI
+        生成的红包封面
       </h2>
     </section>
   );

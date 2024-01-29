@@ -1,14 +1,13 @@
+import { getCovers, getRandCovers } from "@/models/cover";
 import { respData, respErr } from "@/lib/resp";
 
 import { Cover } from "@/types/cover";
-import { getCovers } from "@/models/cover";
 
 export async function POST(req: Request) {
   try {
-    const { page } = await req.json();
-    const limit = 120;
+    const { page, limit } = await req.json();
 
-    const covers: Cover[] = await getCovers(page, limit);
+    const covers: Cover[] = await getRandCovers(page, limit);
 
     return respData(covers);
   } catch (e) {
