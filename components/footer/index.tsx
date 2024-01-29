@@ -10,7 +10,9 @@ export default function () {
             <p className="font-inter mt-4 max-w-[350px] text-base font-light text-gray-500">
               AI 红包封面生成器
             </p>
-            <div className="mb-8 mt-6">{/* <Social /> */}</div>
+            <div className="mb-8 mt-6">
+              <Social />
+            </div>
           </div>
           <div className="flex grow flex-row flex-wrap lg:mx-10 lg:flex-nowrap lg:justify-center">
             <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
@@ -36,15 +38,29 @@ export default function () {
               >
                 知了 zKnown
               </a>
-            </div>
-            <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
-              <p className="font-inter font-medium text-black">友情链接</p>
               <a
                 href="https://aiwallpaper.shop"
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
                 AI Wallpaper
+              </a>
+            </div>
+            <div className="my-5 mr-8 flex max-w-[200px] grow basis-[100px] flex-col space-y-5 lg:mx-10 lg:mt-0">
+              <p className="font-inter font-medium text-black">友情链接</p>
+              <a
+                href="https://idoubi.cc/about/"
+                target="_blank"
+                className="font-inter font-light text-gray-500"
+              >
+                艾逗笔博客
+              </a>
+              <a
+                href="https://mp.weixin.qq.com/s/4duIpeZkmqlKPa4jrcUdIA"
+                target="_blank"
+                className="font-inter font-light text-gray-500"
+              >
+                全栈开发课
               </a>
             </div>
           </div>

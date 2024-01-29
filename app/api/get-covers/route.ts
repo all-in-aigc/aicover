@@ -6,7 +6,7 @@ import { getCovers } from "@/models/cover";
 export async function POST(req: Request) {
   try {
     const { page } = await req.json();
-    const limit = 30;
+    const limit = 120;
 
     const covers: Cover[] = await getCovers(page, limit);
 

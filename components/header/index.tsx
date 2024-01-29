@@ -50,7 +50,9 @@ export default function () {
             <div className="flex-1"></div>
 
             <div className="flex flex-row items-center lg:flex lg:flex-row lg:space-x-3 lg:space-y-0">
-              <div className="hidden md:block mr-4">{/* <Social /> */}</div>
+              <div className="hidden md:block mr-4">
+                <Social />
+              </div>
 
               {user === undefined ? (
                 <>loading...</>
