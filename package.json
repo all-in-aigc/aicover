@@ -14,6 +14,7 @@
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@stripe/stripe-js": "^2.4.0",
     "@vercel/analytics": "^1.1.2",
     "aws-sdk": "^2.1545.0",

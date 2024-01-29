@@ -1,57 +1,47 @@
-"use client";
+import {
+  getCovers,
+  getRandomCovers,
+  getRecommendedCovers,
+  getUserCovers,
+} from "@/models/cover";
 
-import { useContext, useEffect, useState } from "react";
-
-import { AppContext } from "@/contexts/AppContext";
 import { Cover } from "@/types/cover";
 import Image from "next/image";
+import Tabs from "../tabs";
+import { currentUser } from "@clerk/nextjs";
 
-export default function () {
-  const { covers, setCovers } = useContext(AppContext);
-  const [loading, setLoading] = useState(false);
+export default async function ({ cate }: { cate: string }) {
+  const page = 1;
+  const limit = 60;
 
-  const fetchCovers = async (page: number) => {
-    try {
-      const params = {
-        page: page,
-        limit: 30,
-      };
-
-      setLoading(true);
-      const resp = await fetch("/api/get-covers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(params),
-      });
-
-      const { code, message, data } = await resp.json();
-      setLoading(false);
-
-      if (data) {
-        setCovers(data);
-      }
-    } catch (e) {
-      console.log("fetch covers failed", e);
+  let covers: Cover[] = [];
+  if (cate === "featured") {
+    covers = await getRecommendedCovers(page, limit);
+  } else if (cate === "random") {
+    covers = await getRandomCovers(page, limit);
+  } else if (cate === "mine") {
+    const user = await currentUser();
+    if (!user || !user.emailAddresses || user.emailAddresses.length === 0) {
+      return (
+        <p className="flex items-center justify-center py-16 text-xl">
+          user not login
+        </p>
+      );
     }
-  };
-
-  useEffect(() => {
-    fetchCovers(1);
-  }, []);
+    const user_email = user.emailAddresses[0].emailAddress;
+    covers = await getUserCovers(user_email, page, limit);
+  } else {
+    covers = await getCovers(page, limit);
+  }
 
   return (
     <section>
       <div className="mx-auto max-w-7xl px-5 my-16">
         <div className="mx-auto w-full max-w-3xl text-center">
-          <h2 className="text-3xl font-normal md:text-2xl ">全部红包封面</h2>
-          <div className="mx-auto mb-8 mt-4 max-w-[528px] md:mb-12 lg:mb-16">
-            <p className="text-[#636262]"></p>
-          </div>
+          <Tabs cate={cate} />
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:gap-12">
-          {loading ? (
+          {false ? (
             <div className="text-center mx-auto">loading...</div>
           ) : (
             <>

@@ -88,7 +88,7 @@ export async function findCoverByUuid(
   return cover;
 }
 
-export async function getRandCovers(
+export async function getRandomCovers(
   page: number,
   limit: number
 ): Promise<Cover[]> {
@@ -138,6 +138,59 @@ export async function getCovers(page: number, limit: number): Promise<Cover[]> {
   return covers;
 }
 
+export async function getUserCovers(
+  user_email: string,
+  page: number,
+  limit: number
+): Promise<Cover[]> {
+  if (page < 1) {
+    page = 1;
+  }
+  if (limit <= 0) {
+    limit = 50;
+  }
+  const offset = (page - 1) * limit;
+
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from covers as w left join users as u on w.user_email = u.email where w.user_email = $1 order by w.created_at desc limit $2 offset $3`,
+    [user_email, limit, offset]
+  );
+  if (res.rowCount === 0) {
+    return [];
+  }
+
+  const covers = getCoversFromSqlResult(res);
+
+  return covers;
+}
+
+export async function getRecommendedCovers(
+  page: number,
+  limit: number
+): Promise<Cover[]> {
+  if (page < 1) {
+    page = 1;
+  }
+  if (limit <= 0) {
+    limit = 50;
+  }
+  const offset = (page - 1) * limit;
+
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from covers as w left join users as u on w.user_email = u.email where w.is_recommended = true and w.status = 1 order by w.created_at desc limit $1 offset $2`,
+    [limit, offset]
+  );
+  if (res.rowCount === 0) {
+    return [];
+  }
+
+  const covers = getCoversFromSqlResult(res);
+
+  return covers;
+}
+
 export function getCoversFromSqlResult(
   res: QueryResult<QueryResultRow>
 ): Cover[] {
@@ -169,6 +222,7 @@ export function formatCover(row: QueryResultRow): Cover | undefined {
     created_at: row.created_at,
     uuid: row.uuid,
     status: row.status,
+    is_recommended: row.is_recommended,
   };
 
   if (row.user_name || row.user_avatar) {

@@ -17,7 +17,8 @@ CREATE TABLE covers (
     llm_params JSON,
     created_at timestamptz,
     uuid UUID UNIQUE NOT NULL,
-    status INT
+    status INT,
+    is_recommended BOOLEAN
 );
 
 CREATE TABLE orders (
