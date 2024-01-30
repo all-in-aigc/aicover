@@ -13,13 +13,13 @@ export default function () {
       >
         <BsGithub className="text-lg" />
       </a>
-      {/* <a
-        href="https://www.producthunt.com/posts/ai-wallpaper?utm_source=aiwallpaper.shop"
+      <a
+        href="https://www.producthunt.com/posts/ai-red-envelope-cover-generator?utm_source=aicover.design"
         target="_blank"
         className="mx-3 flex max-w-[24px] flex-col items-center justify-center"
       >
         <FaProductHunt className="text-xl" />
-      </a> */}
+      </a>
       <a
         href="https://twitter.com/idoubicc"
         target="_blank"

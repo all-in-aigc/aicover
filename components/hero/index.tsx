@@ -1,3 +1,4 @@
+import Producthunt from "../producthunt";
 import { getCoversCount } from "@/models/cover";
 
 export default async function () {
@@ -12,6 +13,7 @@ export default async function () {
         <span className="text-primary">{covers_count}</span> 张使用 AI
         生成的红包封面
       </h2>
+      <Producthunt />
     </section>
   );
 }

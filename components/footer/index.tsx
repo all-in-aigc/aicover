@@ -53,7 +53,7 @@ export default function () {
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
-                艾逗笔博客
+                艾逗笔
               </a>
               <a
                 href="https://mp.weixin.qq.com/s/4duIpeZkmqlKPa4jrcUdIA"
