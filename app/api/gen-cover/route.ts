@@ -50,11 +50,12 @@ export async function POST(req: Request) {
       return respErr("generate cover failed");
     }
 
+    const img_uuid = genUuid();
     const img_name = encodeURIComponent(description);
     const s3_img = await downloadAndUploadImage(
       raw_img_url,
       process.env.AWS_BUCKET || "trysai",
-      `covers/${img_name}.png`
+      `covers/${img_uuid}.png`
     );
     const img_url = s3_img.Location;
 
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
       llm_name: llm_name,
       llm_params: JSON.stringify(llm_params),
       created_at: created_at,
-      uuid: genUuid(),
+      uuid: img_uuid,
       status: 1,
     };
     await insertCover(cover);

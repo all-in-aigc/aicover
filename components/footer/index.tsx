@@ -65,11 +65,14 @@ export default function () {
             </div>
           </div>
           <div className="mt-10 flex flex-col lg:mt-0">
-            <div className="mb-4 flex flex-row items-center">
+            <div className="mb-4 flex flex-col items-center">
+              <p className="font-inter font-medium text-black">
+                🧧 红包封面分享交流
+              </p>
               <p className="font-inter ml-4 text-black">
                 <img
                   src={
-                    "https://zknown-1251007641.cos.ap-guangzhou.myqcloud.com/images/20240129101907.png"
+                    "https://zknown-1251007641.cos.ap-guangzhou.myqcloud.com/images/20240130090120.png"
                   }
                   alt="qrcode"
                   width={"250"}
