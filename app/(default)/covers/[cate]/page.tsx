@@ -7,7 +7,7 @@ export default function ({ params }: { params: { cate: string } }) {
     <div className="w-full px-6">
       <Hero />
       <Input />
-      <Covers cate={params.cate} />
+      <Covers cate={params.cate} showTab={true} />
     </div>
   );
 }

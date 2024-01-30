@@ -12,7 +12,10 @@ export default authMiddleware({
           { status: 401 }
         );
       } else {
-        return NextResponse.redirect(new URL("/sign-in", req.url));
+        const url = new URL(req.url);
+        if (!url.pathname.startsWith("/cover/")) {
+          return NextResponse.redirect(new URL("/sign-in", req.url));
+        }
       }
     }
 

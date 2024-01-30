@@ -10,7 +10,13 @@ import Image from "next/image";
 import Tabs from "../tabs";
 import { currentUser } from "@clerk/nextjs";
 
-export default async function ({ cate }: { cate: string }) {
+export default async function ({
+  cate,
+  showTab,
+}: {
+  cate: string;
+  showTab?: boolean;
+}) {
   const page = 1;
   const limit = 60;
 
@@ -37,9 +43,12 @@ export default async function ({ cate }: { cate: string }) {
   return (
     <section>
       <div className="mx-auto max-w-7xl px-5 my-16">
-        <div className="mx-auto w-full max-w-3xl text-center">
-          <Tabs cate={cate} />
-        </div>
+        {showTab && (
+          <div className="mx-auto w-full max-w-3xl text-center">
+            <Tabs cate={cate} />
+          </div>
+        )}
+
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:gap-12">
           {false ? (
             <div className="text-center mx-auto">loading...</div>
@@ -48,7 +57,8 @@ export default async function ({ cate }: { cate: string }) {
               {covers &&
                 covers.map((cover: Cover, idx: number) => {
                   return (
-                    <div
+                    <a
+                      href={`/cover/${cover.uuid}`}
                       key={idx}
                       className="relative overflow-hidden max-w-[280px] mx-auto cursor-pointer"
                     >
@@ -65,7 +75,7 @@ export default async function ({ cate }: { cate: string }) {
                         className="absolute bottom-0"
                         alt=""
                       />
-                    </div>
+                    </a>
                   );
                 })}
             </>

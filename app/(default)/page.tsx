@@ -7,7 +7,7 @@ export default function () {
     <div className="w-full px-6">
       <Hero />
       <Input />
-      <Covers cate="latest" />
+      <Covers cate="latest" showTab={true} />
     </div>
   );
 }
