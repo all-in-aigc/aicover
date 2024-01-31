@@ -32,7 +32,7 @@ export default async function ({ params }: { params: { uuid: string } }) {
 
   const img_url = `${
     process.env.WEB_BASE_URI
-  }/_next/image?url=${encodeURIComponent(cover.img_url)}&w=480&q=75`;
+  }/_next/image?url=${encodeURIComponent(cover.img_url)}&w=400&q=75`;
 
   redirect(img_url);
 }
