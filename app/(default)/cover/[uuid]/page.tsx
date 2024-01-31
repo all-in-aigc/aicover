@@ -84,7 +84,10 @@ export default async function ({ params }: { params: { uuid: string } }) {
                       </p>
 
                       <p className="text-sm text-[#636262] text-left">
-                        <a href={`/download/${params.uuid}`}>
+                        <a
+                          href={`/download/${params.uuid}`}
+                          download={`${params.uuid}.png`}
+                        >
                           <Button className="mt-4 mx-auto">
                             <FaDownload className="mr-2" />
                             下载封面图片
@@ -94,6 +97,17 @@ export default async function ({ params }: { params: { uuid: string } }) {
                         <Share
                           shareUrl={`${process.env.WEB_BASE_URI}/cover/${cover.uuid}`}
                         />
+                      </p>
+
+                      <p className="text-slate-500 text-sm py-8">
+                        此处下载的封面图片，不能直接用于微信发红包。你可以上传到微信红包封面开放平台，
+                        <a
+                          href="https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/make"
+                          target="_blank"
+                          className="text-primary"
+                        >
+                          定制你的红包封面👉
+                        </a>
                       </p>
                     </div>
                   </div>
