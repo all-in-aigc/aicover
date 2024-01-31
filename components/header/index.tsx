@@ -16,6 +16,12 @@ export default function () {
       url: "https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1",
       target: "_blank",
     },
+    {
+      name: "about",
+      title: "关于",
+      url: "https://mp.weixin.qq.com/s/4AIX8tGxRENukXf1srnRBA",
+      target: "_blank",
+    },
   ];
 
   return (
