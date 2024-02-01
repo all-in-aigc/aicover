@@ -4,7 +4,9 @@ CREATE TABLE users (
     nickname VARCHAR(255),
     avatar_url VARCHAR(255),
     created_at timestamptz,
-    uuid UUID UNIQUE NOT NULL
+    uuid UUID UNIQUE NOT NULL,
+    openid VARCHAR(255),
+    platform VARCHAR(50)
 );
 
 CREATE TABLE covers (

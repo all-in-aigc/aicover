@@ -1,13 +1,16 @@
 import { ContextProviderProps, ContextProviderValue } from "@/types/context";
 import { createContext, useEffect, useState } from "react";
 
+import Cookie from "js-cookie";
 import { Cover } from "@/types/cover";
 import { User } from "@/types/user";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const AppContext = createContext({} as ContextProviderValue);
 
 export const AppContextProvider = ({ children }: ContextProviderProps) => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null | undefined>(undefined);
   const [covers, setCovers] = useState<Cover[] | null>(null);
 

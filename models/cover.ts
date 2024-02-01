@@ -227,14 +227,12 @@ export function formatCover(row: QueryResultRow): Cover | undefined {
     user_uuid: row.user_uuid,
   };
 
-  if (row.user_name || row.user_avatar) {
-    cover.created_user = {
-      email: row.user_email,
-      nickname: row.user_name,
-      avatar_url: row.user_avatar,
-      uuid: row.user_uuid,
-    };
-  }
+  cover.created_user = {
+    email: row.user_email,
+    nickname: row.user_name,
+    avatar_url: row.user_avatar,
+    uuid: row.user_uuid,
+  };
 
   try {
     cover.llm_params = JSON.parse(JSON.stringify(cover.llm_params));

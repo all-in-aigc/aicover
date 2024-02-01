@@ -33,7 +33,7 @@ export default function () {
 
     if (!user) {
       toast.error("请先登录");
-      router.push("/sign-in");
+      router.push("/login");
       return;
     }
 
@@ -61,7 +61,6 @@ export default function () {
 
       if (resp.status === 401) {
         toast.error("请先登录");
-        router.push("/sign-in");
         return;
       }
       console.log("gen wallpaper resp", resp);
@@ -89,7 +88,6 @@ export default function () {
     if (description) {
       if (!user) {
         toast.error("请先登录");
-        router.push("/sign-in");
         return;
       }
     }

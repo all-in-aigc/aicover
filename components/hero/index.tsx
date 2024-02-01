@@ -1,9 +1,6 @@
-import Producthunt from "../producthunt";
-import { getCoversCount } from "@/models/cover";
+import Producthunt from "@/components/producthunt";
 
-export default async function () {
-  const covers_count = await getCoversCount();
-
+export default function ({ covers_count }: { covers_count: number }) {
   return (
     <section className="max-w-3xl mx-auto text-center">
       <h1 className="text-3xl md:text-6xl font-bold text-primary mt-8 md:mt-24">

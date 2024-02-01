@@ -1,20 +1,25 @@
 import { insertOrder, updateOrderSession } from "@/models/order";
-import { respData, respErr } from "@/lib/resp";
+import { respData, respErr, respErrWithStatus } from "@/lib/resp";
 
+import { NextRequest } from "next/server";
 import { Order } from "@/types/order";
 import Stripe from "stripe";
-import { currentUser } from "@clerk/nextjs";
-import { findUserByEmail } from "@/models/user";
 import { genOrderNo } from "@/lib/order";
+import { getUser } from "@/services/auth";
 
 export const maxDuration = 120;
 
-export async function POST(req: Request) {
-  const user = await currentUser();
-  if (!user || !user.emailAddresses || user.emailAddresses.length === 0) {
-    return respErr("not login");
+export async function POST(req: NextRequest) {
+  const userToken = req.cookies.get("user-token");
+  if (!userToken || !userToken.value) {
+    return respErrWithStatus("no auth", 401);
   }
-  const user_email = user.emailAddresses[0].emailAddress;
+  const user = await getUser(userToken.value);
+  if (!user || !user.uuid) {
+    return respErrWithStatus("invalid user token", 401);
+  }
+  const user_email = user.email;
+  const user_uuid = user.uuid;
 
   try {
     const { credits, currency, amount, plan } = await req.json();
@@ -24,12 +29,6 @@ export async function POST(req: Request) {
 
     if (!["monthly", "one-time"].includes(plan)) {
       return respErr("invalid plan");
-    }
-
-    let user_uuid = "";
-    const user_info = await findUserByEmail(user_email);
-    if (user_info && user_info.uuid) {
-      user_uuid = user_info.uuid;
     }
 
     const order_no = genOrderNo();
@@ -59,7 +58,7 @@ export async function POST(req: Request) {
     const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");
 
     let options: Stripe.Checkout.SessionCreateParams = {
-      customer_email: user_email,
+      customer_email: user.platform ? undefined : user_email,
       payment_method_types: ["card"],
       line_items: [
         {

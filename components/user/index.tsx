@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { SignOutButton } from "@clerk/nextjs";
+import Cookie from "js-cookie";
 import { User } from "@/types/user";
 import { useRouter } from "next/navigation";
 
@@ -23,17 +23,22 @@ interface Props {
 export default function ({ user }: Props) {
   const router = useRouter();
 
+  const logout = () => {
+    Cookie.remove("user-token");
+    window.location.href = "/";
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
           <AvatarImage src={user.avatar_url} alt={user.nickname} />
-          <AvatarFallback>{user.nickname}</AvatarFallback>
+          <AvatarFallback>{user.nickname || "🧧"}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mx-4">
         <DropdownMenuLabel className="text-center truncate">
-          {user.nickname ? user.nickname : user.email}
+          {user.nickname ? user.nickname : "匿名用户"}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
@@ -53,9 +58,7 @@ export default function ({ user }: Props) {
         <DropdownMenuSeparator className="md:hidden" />
 
         <DropdownMenuCheckboxItem>
-          <SignOutButton signOutCallback={() => location.reload()}>
-            退出登录
-          </SignOutButton>
+          <button onClick={logout}>退出登录</button>
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>

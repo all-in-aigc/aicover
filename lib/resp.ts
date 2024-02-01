@@ -10,6 +10,16 @@ export function respErr(message: string) {
   return respJson(-1, message);
 }
 
+export function respErrWithStatus(message: string, status: number) {
+  return Response.json(
+    {
+      code: -1,
+      message: message,
+    },
+    { status: status }
+  );
+}
+
 export function respJson(code: number, message: string, data?: any) {
   let json = {
     code: code,

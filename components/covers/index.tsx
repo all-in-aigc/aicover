@@ -1,45 +1,16 @@
-import {
-  getCovers,
-  getRandomCovers,
-  getRecommendedCovers,
-  getUserCovers,
-} from "@/models/cover";
-
 import { Cover } from "@/types/cover";
 import Image from "next/image";
-import Tabs from "../tabs";
-import { currentUser } from "@clerk/nextjs";
+import Tabs from "@/components/tabs";
 
-export default async function ({
+export default function ({
   cate,
   showTab,
+  covers,
 }: {
   cate: string;
   showTab?: boolean;
+  covers: Cover[] | null;
 }) {
-  const page = 1;
-  const limit = 60;
-
-  let covers: Cover[] = [];
-  if (cate === "featured") {
-    covers = await getRecommendedCovers(page, limit);
-  } else if (cate === "random") {
-    covers = await getRandomCovers(page, limit);
-  } else if (cate === "mine") {
-    const user = await currentUser();
-    if (!user || !user.emailAddresses || user.emailAddresses.length === 0) {
-      return (
-        <p className="flex items-center justify-center py-16 text-xl">
-          user not login
-        </p>
-      );
-    }
-    const user_email = user.emailAddresses[0].emailAddress;
-    covers = await getUserCovers(user_email, page, limit);
-  } else {
-    covers = await getCovers(page, limit);
-  }
-
   return (
     <section>
       <div className="mx-auto max-w-7xl px-5 my-16">

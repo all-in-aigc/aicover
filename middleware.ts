@@ -1,27 +1,46 @@
-import { NextResponse } from "next/server";
-import { authMiddleware } from "@clerk/nextjs";
+import { NextRequest, NextResponse } from "next/server";
 
-export default authMiddleware({
-  publicRoutes: ["/", "/pricing", "/api/get-covers", "/api/get-user-info"],
+import { getUser } from "./services/auth";
 
-  afterAuth(auth, req, evt) {
-    if (!auth.userId && !auth.isPublicRoute) {
-      if (auth.isApiRoute) {
-        return NextResponse.json(
-          { code: -2, message: "no auth" },
-          { status: 401 }
-        );
-      } else {
-        const url = new URL(req.url);
-        if (!url.pathname.startsWith("/cover/")) {
-          return NextResponse.redirect(new URL("/sign-in", req.url));
-        }
+const publicRoutes = [
+  "/",
+  "/pricing",
+  "/login",
+  "/api/get-covers",
+  "/api/get-user-info",
+  "/api/get-login-qrcode",
+  "/api/check-login",
+];
+
+export default async function middleware(req: NextRequest) {
+  const url = new URL(req.url);
+  const pathname = url.pathname;
+  if (
+    !publicRoutes.includes(pathname) &&
+    !pathname.startsWith("/cover") &&
+    !pathname.startsWith("/pay-success")
+  ) {
+    const userToken = req.cookies.get("user-token");
+    if (userToken && userToken.value) {
+      const user = await getUser(userToken.value);
+      if (user && user.uuid) {
+        return NextResponse.next();
       }
     }
 
-    return NextResponse.next();
-  },
-});
+    // no auth
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        { code: -2, message: "no auth" },
+        { status: 401 }
+      );
+    }
+
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api)(.*)"],

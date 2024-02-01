@@ -83,9 +83,7 @@ export default function () {
 
       if (response.status === 401) {
         setLoading(false);
-
-        toast.error("need login");
-        router.push("/sign-in");
+        toast.error("请先登录");
         return;
       }
 

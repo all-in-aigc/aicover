@@ -6,6 +6,8 @@ export interface User {
   created_at?: string;
   credits?: UserCredits;
   uuid: string;
+  openid?: string;
+  platform?: string;
 }
 
 export interface UserCredits {
@@ -14,4 +16,10 @@ export interface UserCredits {
   total_credits: number;
   used_credits: number;
   left_credits: number;
+}
+
+export interface LoginQrcode {
+  login_code: string;
+  login_qrurl: string;
+  expires: number;
 }

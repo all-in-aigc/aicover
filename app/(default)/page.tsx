@@ -1,3 +1,5 @@
+import { getCovers, getCoversCount } from "@/models/cover";
+
 import Covers from "@/components/covers";
 import Hero from "@/components/hero";
 import Input from "@/components/input";
@@ -11,12 +13,19 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function () {
+export default async function () {
+  const page = 1;
+  const limit = 60;
+  const cate = "latest";
+
+  const covers = await getCovers(page, limit);
+  const covers_count = await getCoversCount();
+
   return (
     <div className="w-full px-6">
-      <Hero />
+      <Hero covers_count={covers_count} />
       <Input />
-      <Covers cate="latest" showTab={true} />
+      <Covers cate={cate} showTab={true} covers={covers} />
     </div>
   );
 }

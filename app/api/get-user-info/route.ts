@@ -1,37 +1,42 @@
 import { findUserByEmail, insertUser } from "@/models/user";
-import { respData, respErr } from "@/lib/resp";
+import { respData, respErr, respErrWithStatus } from "@/lib/resp";
 
+import { NextRequest } from "next/server";
 import { User } from "@/types/user";
-import { currentUser } from "@clerk/nextjs";
 import { genUuid } from "@/lib";
+import { getUser } from "@/services/auth";
 import { getUserCredits } from "@/services/order";
 
-export async function POST(req: Request) {
-  const user = await currentUser();
-  if (!user || !user.emailAddresses || user.emailAddresses.length === 0) {
-    return respErr("not login");
+export async function POST(req: NextRequest) {
+  const userToken = req.cookies.get("user-token");
+  if (!userToken || !userToken.value) {
+    return respErrWithStatus("no auth", 401);
   }
+  const user = await getUser(userToken.value);
+  if (!user || !user.uuid) {
+    return respErrWithStatus("invalid user token", 401);
+  }
+  const user_email = user.email;
+  const user_uuid = user.uuid;
 
   try {
-    const email = user.emailAddresses[0].emailAddress;
-    const nickname = user.firstName;
-    const avatarUrl = user.imageUrl;
-
     let userInfo: User = {
-      email: email,
-      nickname: nickname || "",
-      avatar_url: avatarUrl,
-      uuid: genUuid(),
+      email: user_email,
+      nickname: user.nickname || "",
+      avatar_url: user.avatar_url,
+      uuid: user_uuid,
+      openid: user.openid,
+      platform: user.platform,
     };
 
-    const existUser = await findUserByEmail(email);
+    const existUser = await findUserByEmail(user_email);
     if (existUser) {
       userInfo.uuid = existUser.uuid;
     } else {
       await insertUser(userInfo);
     }
 
-    const user_credits = await getUserCredits(email);
+    const user_credits = await getUserCredits(user_email);
     userInfo.credits = user_credits;
 
     return respData(userInfo);

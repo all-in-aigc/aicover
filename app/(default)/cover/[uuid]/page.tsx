@@ -1,7 +1,9 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { findCoverByUuid, getRandomCovers } from "@/models/cover";
 
 import { Button } from "@/components/ui/button";
 import Covers from "@/components/covers";
+import Download from "@/components/download";
 import { FaDownload } from "react-icons/fa";
 import Image from "next/image";
 import { Metadata } from "next";
@@ -32,6 +34,7 @@ export async function generateMetadata({
 
 export default async function ({ params }: { params: { uuid: string } }) {
   const cover = await findCoverByUuid(params.uuid);
+  const covers = await getRandomCovers(1, 60);
 
   return (
     <>
@@ -62,37 +65,37 @@ export default async function ({ params }: { params: { uuid: string } }) {
                     </a>
 
                     <div className="sm:max-w-sm md:max-w-md lg:max-w-lg">
-                      <a href="" className="group block flex-shrink-0">
-                        <div className="flex items-center">
-                          <div>
-                            <img
-                              className="inline-block h-9 w-9 rounded-full"
-                              src={cover.created_user?.avatar_url}
-                              alt={cover.created_user?.nickname}
-                            />
+                      {cover.created_user && (
+                        <a className="group block flex-shrink-0">
+                          <div className="flex items-center">
+                            <div>
+                              <Avatar className="cursor-pointer">
+                                <AvatarImage
+                                  src={cover.created_user.avatar_url}
+                                  alt={cover.created_user.nickname}
+                                />
+                                <AvatarFallback>
+                                  {cover.created_user.nickname || "🧧"}
+                                </AvatarFallback>
+                              </Avatar>
+                            </div>
+                            <div className="ml-3">
+                              <p className="text-lg font-medium text-gray-700 group-hover:text-gray-900">
+                                {cover.created_user.avatar_url
+                                  ? cover.created_user.nickname
+                                  : "匿名用户"}
+                              </p>
+                            </div>
                           </div>
-                          <div className="ml-3">
-                            <p className="text-lg font-medium text-gray-700 group-hover:text-gray-900">
-                              {cover.created_user?.nickname}
-                            </p>
-                          </div>
-                        </div>
-                      </a>
+                        </a>
+                      )}
 
                       <p className="mt-4 mb-6 max-w-md text-[#636262] md:mb-10 lg:mb-12">
                         "{cover.img_description}"
                       </p>
 
                       <p className="text-sm text-[#636262] text-left">
-                        <a
-                          href={`/download/${params.uuid}`}
-                          download={`${params.uuid}.png`}
-                        >
-                          <Button className="mt-4 mx-auto">
-                            <FaDownload className="mr-2" />
-                            下载封面图片
-                          </Button>
-                        </a>
+                        <Download cover={cover} />
 
                         <Share
                           shareUrl={`${process.env.WEB_BASE_URI}/cover/${cover.uuid}`}
@@ -130,7 +133,7 @@ export default async function ({ params }: { params: { uuid: string } }) {
               </h2>
 
               <div className="mb-8 grid w-full grid-cols-1 md:mb-12 md:grid-cols-1 md:gap-4 lg:mb-16">
-                <Covers cate="random" />
+                <Covers cate="random" covers={covers} showTab={false} />
               </div>
             </div>
           </div>
