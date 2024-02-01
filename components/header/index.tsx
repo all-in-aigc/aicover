@@ -18,8 +18,14 @@ export default function () {
     },
     {
       name: "about",
-      title: "关于",
+      title: "复盘",
       url: "https://mp.weixin.qq.com/s/4AIX8tGxRENukXf1srnRBA",
+      target: "_blank",
+    },
+    {
+      name: "bisai",
+      title: "比赛",
+      url: "https://mp.weixin.qq.com/s/rUp58SBIQJfyvaWBgrpwJw",
       target: "_blank",
     },
   ];

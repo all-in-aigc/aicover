@@ -108,6 +108,17 @@ export default async function ({ params }: { params: { uuid: string } }) {
                         >
                           定制你的红包封面👉
                         </a>
+                        <br />
+                        <br />
+                        微信红包封面图片要求在 500k
+                        以内，如果下载的图片过大，请自行
+                        <a
+                          href="https://tinypng.com/"
+                          target="_blank"
+                          className="text-primary"
+                        >
+                          压缩图片👉
+                        </a>
                       </p>
                     </div>
                   </div>
