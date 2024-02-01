@@ -4,6 +4,7 @@ import { Cover } from "@/types/cover";
 import { ImageGenerateParams } from "openai/resources/images.mjs";
 import { currentUser } from "@clerk/nextjs";
 import { downloadAndUploadImage } from "@/lib/s3";
+import { findUserByEmail } from "@/models/user";
 import { genUuid } from "@/lib";
 import { getOpenAIClient } from "@/services/openai";
 import { getUserCredits } from "@/services/order";
@@ -14,6 +15,7 @@ export async function POST(req: Request) {
   if (!user || !user.emailAddresses || user.emailAddresses.length === 0) {
     return respErr("no auth");
   }
+  const user_email = user.emailAddresses[0].emailAddress;
 
   try {
     const { description } = await req.json();
@@ -21,7 +23,11 @@ export async function POST(req: Request) {
       return respErr("invalid params");
     }
 
-    const user_email = user.emailAddresses[0].emailAddress;
+    let user_uuid = "";
+    const user_info = await findUserByEmail(user_email);
+    if (user_info && user_info.uuid) {
+      user_uuid = user_info.uuid;
+    }
 
     const user_credits = await getUserCredits(user_email);
     if (!user_credits || user_credits.left_credits < 1) {
@@ -69,6 +75,7 @@ export async function POST(req: Request) {
       created_at: created_at,
       uuid: img_uuid,
       status: 1,
+      user_uuid: user_uuid,
     };
     await insertCover(cover);
 

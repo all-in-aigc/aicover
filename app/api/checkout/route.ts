@@ -4,6 +4,7 @@ import { respData, respErr } from "@/lib/resp";
 import { Order } from "@/types/order";
 import Stripe from "stripe";
 import { currentUser } from "@clerk/nextjs";
+import { findUserByEmail } from "@/models/user";
 import { genOrderNo } from "@/lib/order";
 
 export const maxDuration = 120;
@@ -14,7 +15,6 @@ export async function POST(req: Request) {
     return respErr("not login");
   }
   const user_email = user.emailAddresses[0].emailAddress;
-  console.log("user email: ", user_email);
 
   try {
     const { credits, currency, amount, plan } = await req.json();
@@ -24,6 +24,12 @@ export async function POST(req: Request) {
 
     if (!["monthly", "one-time"].includes(plan)) {
       return respErr("invalid plan");
+    }
+
+    let user_uuid = "";
+    const user_info = await findUserByEmail(user_email);
+    if (user_info && user_info.uuid) {
+      user_uuid = user_info.uuid;
     }
 
     const order_no = genOrderNo();
@@ -45,8 +51,9 @@ export async function POST(req: Request) {
       order_status: 1,
       credits: credits,
       currency: currency,
+      user_uuid: user_uuid,
     };
-    insertOrder(order);
+    await insertOrder(order);
     console.log("create new order: ", order);
 
     const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY || "");

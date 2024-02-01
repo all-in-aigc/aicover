@@ -6,9 +6,9 @@ export async function insertOrder(order: Order) {
   const db = getDb();
   const res = await db.query(
     `INSERT INTO orders 
-        (order_no, created_at, user_email, amount, plan, expired_at, order_status, credits, currency) 
+        (order_no, created_at, user_email, amount, plan, expired_at, order_status, credits, currency, user_uuid) 
         VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     `,
     [
       order.order_no,
@@ -20,6 +20,7 @@ export async function insertOrder(order: Order) {
       order.order_status,
       order.credits,
       order.currency,
+      order.user_uuid,
     ]
   );
 
@@ -108,6 +109,7 @@ function formatOrder(row: QueryResultRow): Order {
     stripe_session_id: row.stripe_session_id,
     credits: row.credits,
     currency: row.currency,
+    user_uuid: row.user_uuid,
   };
 
   return order;

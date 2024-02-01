@@ -18,7 +18,8 @@ CREATE TABLE covers (
     created_at timestamptz,
     uuid UUID UNIQUE NOT NULL,
     status INT,
-    is_recommended BOOLEAN
+    is_recommended BOOLEAN,
+    user_uuid UUID
 );
 
 CREATE TABLE orders (
@@ -33,5 +34,6 @@ CREATE TABLE orders (
     paied_at timestamptz,
     stripe_session_id VARCHAR(255),
     credits INT NOT NULL,
-    currency VARCHAR(50)
+    currency VARCHAR(50),
+    user_uuid UUID
 );

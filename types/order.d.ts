@@ -10,4 +10,5 @@ export interface Order {
   stripe_session_id?: string;
   credits: number;
   currency: string;
+  user_uuid?: string;
 }
