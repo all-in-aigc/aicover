@@ -14,6 +14,7 @@ export default function () {
   const router = useRouter();
   const [coversCount, setCoversCount] = useState(0);
   const [covers, setCovers] = useState<Cover[] | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchUserCovers = async (page: number) => {
     try {
@@ -21,6 +22,8 @@ export default function () {
         page: page,
         limit: 30,
       };
+
+      setLoading(true);
       const resp = await fetch("/api/get-user-covers", {
         method: "POST",
         headers: {
@@ -28,6 +31,7 @@ export default function () {
         },
         body: JSON.stringify(params),
       });
+      setLoading(false);
 
       if (resp.status === 401) {
         toast.error("请先登录");
@@ -51,9 +55,9 @@ export default function () {
 
   return (
     <div className="w-full px-6">
-      <Hero covers_count={coversCount} />
+      <Hero covers_count={coversCount} loading={loading} />
       <Input />
-      <Covers cate="mine" showTab={true} covers={covers} />
+      <Covers cate="mine" showTab={true} covers={covers} loading={loading} />
     </div>
   );
 }

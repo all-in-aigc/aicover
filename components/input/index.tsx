@@ -87,7 +87,7 @@ export default function () {
   useEffect(() => {
     if (description) {
       if (!user) {
-        toast.error("请先登录");
+        // toast.error("请先登录");
         return;
       }
     }

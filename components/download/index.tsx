@@ -11,9 +11,12 @@ import { useRouter } from "next/navigation";
 export default function ({ cover }: { cover: Cover }) {
   const { user } = useContext(AppContext);
 
-  const handleDownload = async () => {
-    if (!user || !user.uuid) {
+  const handleDownload = async (e: any) => {
+    if (user === null) {
       toast.error("请先登录");
+      return;
+    }
+    if (!user) {
       return;
     }
     if (!user.credits || user.credits.left_credits <= 0) {
@@ -21,8 +24,22 @@ export default function ({ cover }: { cover: Cover }) {
       return;
     }
 
-    const img_url = cover.img_url;
-    window.location.href = img_url;
+    e.preventDefault();
+    try {
+      const response = await fetch(cover.img_url);
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = downloadUrl;
+      link.setAttribute("download", `${cover.uuid}.png`); // 设置下载的文件名
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error("download img_url failed:", error);
+      toast.error("下载出错");
+    }
   };
 
   return (

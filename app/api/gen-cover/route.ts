@@ -4,6 +4,7 @@ import { respData, respErr, respErrWithStatus } from "@/lib/resp";
 import { Cover } from "@/types/cover";
 import { ImageGenerateParams } from "openai/resources/images.mjs";
 import { downloadAndUploadImage } from "@/lib/s3";
+import { downloadAndUploadImage as downloadAndUploadImageWithCos } from "@/lib/cos";
 import { genUuid } from "@/lib";
 import { getOpenAIClient } from "@/services/openai";
 import { getUser } from "@/services/auth";
@@ -57,12 +58,24 @@ export async function POST(req: NextRequest) {
 
     const img_uuid = genUuid();
     const img_name = encodeURIComponent(description);
-    const s3_img = await downloadAndUploadImage(
-      raw_img_url,
-      process.env.AWS_BUCKET || "trysai",
-      `covers/${img_uuid}.png`
-    );
-    const img_url = s3_img.Location;
+
+    let img_url = "";
+
+    if (process.env.COS_BUCKET) {
+      const cos_img = await downloadAndUploadImageWithCos(
+        raw_img_url,
+        process.env.COS_BUCKET || "",
+        `covers/${img_uuid}.png`
+      );
+      img_url = `https://${cos_img.Location}`;
+    } else {
+      const s3_img = await downloadAndUploadImage(
+        raw_img_url,
+        process.env.AWS_BUCKET || "",
+        `covers/${img_uuid}.png`
+      );
+      img_url = s3_img.Location;
+    }
 
     const cover: Cover = {
       user_email: user_email,

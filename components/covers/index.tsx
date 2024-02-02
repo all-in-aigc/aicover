@@ -6,10 +6,12 @@ export default function ({
   cate,
   showTab,
   covers,
+  loading,
 }: {
   cate: string;
   showTab?: boolean;
   covers: Cover[] | null;
+  loading?: boolean;
 }) {
   return (
     <section>
@@ -21,7 +23,7 @@ export default function ({
         )}
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 md:grid-cols-3 lg:gap-12">
-          {false ? (
+          {loading ? (
             <div className="text-center mx-auto">loading...</div>
           ) : (
             <>
