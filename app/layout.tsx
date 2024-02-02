@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Analytics } from "@vercel/analytics/react";
+// import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
@@ -27,7 +27,20 @@ export default function RootLayout({
       <body className={inter.className}>
         <Toaster position="top-center" richColors />
         {children}
-        <Analytics />
+        {/* <Analytics /> */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+          var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?050ba8ed390471309badf55af87f7662";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
+          `,
+          }}
+        ></script>
       </body>
     </html>
   );
