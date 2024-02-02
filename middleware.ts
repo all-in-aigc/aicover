@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getUser } from "./services/auth";
-
 const publicRoutes = [
   "/",
   "/pricing",
@@ -22,10 +20,7 @@ export default async function middleware(req: NextRequest) {
   ) {
     const userToken = req.cookies.get("user-token");
     if (userToken && userToken.value) {
-      const user = await getUser(userToken.value);
-      if (user && user.uuid) {
-        return NextResponse.next();
-      }
+      return NextResponse.next();
     }
 
     // no auth

@@ -1,21 +1,11 @@
+import jwt, { JwtPayload } from "jsonwebtoken";
+
 import { User } from "@/types/user";
 import moment from "moment";
 
 export async function getUser(token: string): Promise<User | null> {
   try {
-    const apiUrl = `${process.env.AUTH_BASE_URI}/user-info `;
-    const resp = await fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const { code, message, data } = await resp.json();
-    if (!data || !data.openid) {
-      console.log("get user info failed: ", code, message, data);
-      return null;
-    }
+    const data = jwt.verify(token, process.env.JWT_SECRET || "") as JwtPayload;
 
     const user: User = {
       email: `${data.openid}@${data.platform}`,
@@ -29,7 +19,7 @@ export async function getUser(token: string): Promise<User | null> {
 
     return user;
   } catch (e) {
-    console.log("get user failed: ", e);
+    console.log("parse jwt token failed: ", e);
     return null;
   }
 }
