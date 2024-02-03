@@ -35,6 +35,25 @@ export async function downloadAndUploadImage(
   }
 }
 
+export async function uploadImage(
+  imageBuffer: Buffer,
+  bucketName: string,
+  s3Key: string
+) {
+  try {
+    const uploadParams = {
+      Bucket: bucketName,
+      Key: s3Key,
+      Body: imageBuffer,
+    };
+
+    return s3.upload(uploadParams).promise();
+  } catch (e) {
+    console.log("upload failed:", e);
+    throw e;
+  }
+}
+
 export async function downloadImage(imageUrl: string, outputPath: string) {
   try {
     const response = await axios({

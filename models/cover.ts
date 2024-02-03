@@ -7,9 +7,9 @@ export async function insertCover(cover: Cover) {
   const db = getDb();
   const res = await db.query(
     `INSERT INTO covers 
-        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at, uuid, status, user_uuid) 
+        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at, uuid, status, user_uuid, is_uploaded) 
         VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     `,
     [
       cover.user_email,
@@ -22,6 +22,7 @@ export async function insertCover(cover: Cover) {
       cover.uuid,
       cover.status,
       cover.user_uuid,
+      cover.is_uploaded,
     ]
   );
 
@@ -192,6 +193,32 @@ export async function getRecommendedCovers(
   return covers;
 }
 
+export async function getAwesomeCovers(
+  page: number,
+  limit: number
+): Promise<Cover[]> {
+  if (page < 1) {
+    page = 1;
+  }
+  if (limit <= 0) {
+    limit = 50;
+  }
+  const offset = (page - 1) * limit;
+
+  const db = getDb();
+  const res = await db.query(
+    `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from covers as w left join users as u on w.user_email = u.email where w.is_awesome = true and w.status = 1 order by w.created_at desc limit $1 offset $2`,
+    [limit, offset]
+  );
+  if (res.rowCount === 0) {
+    return [];
+  }
+
+  const covers = getCoversFromSqlResult(res);
+
+  return covers;
+}
+
 export function getCoversFromSqlResult(
   res: QueryResult<QueryResultRow>
 ): Cover[] {
@@ -225,6 +252,8 @@ export function formatCover(row: QueryResultRow): Cover | undefined {
     status: row.status,
     is_recommended: row.is_recommended,
     user_uuid: row.user_uuid,
+    is_uploaded: row.is_uploaded,
+    is_awesome: row.is_awesome,
   };
 
   if (row.user_name || row.user_avatar) {

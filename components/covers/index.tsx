@@ -1,4 +1,5 @@
 import {
+  getAwesomeCovers,
   getCovers,
   getRandomCovers,
   getRecommendedCovers,
@@ -23,6 +24,8 @@ export default async function ({
   let covers: Cover[] = [];
   if (cate === "featured") {
     covers = await getRecommendedCovers(page, limit);
+  } else if (cate === "awesome") {
+    covers = await getAwesomeCovers(page, limit);
   } else if (cate === "random") {
     covers = await getRandomCovers(page, limit);
   } else if (cate === "mine") {

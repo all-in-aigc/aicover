@@ -42,6 +42,11 @@ export default function ({ user }: Props) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
+        <DropdownMenuLabel className="text-center truncate">
+          <a href="/upload">上传封面</a>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
         <DropdownMenuCheckboxItem className="md:hidden text-center">
           额度: {user.credits?.left_credits}
         </DropdownMenuCheckboxItem>

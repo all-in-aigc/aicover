@@ -19,7 +19,9 @@ CREATE TABLE covers (
     uuid UUID UNIQUE NOT NULL,
     status INT,
     is_recommended BOOLEAN,
-    user_uuid UUID
+    user_uuid UUID,
+    is_uploaded BOOLEAN,
+    is_awesome BOOLEAN
 );
 
 CREATE TABLE orders (
