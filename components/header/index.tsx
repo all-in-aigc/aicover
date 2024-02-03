@@ -4,29 +4,25 @@ import { Nav } from "@/types/nav";
 import Social from "@/components/social";
 import User from "@/components/user";
 import { useContext } from "react";
+import { usePathname } from "next/navigation";
 
 export default function () {
   const { user } = useContext(AppContext);
-
+  const pathname = usePathname();
   const navigations: Nav[] = [
-    { name: "pricing", title: "价格", url: "/pricing", target: "_self" },
     {
-      name: "doc",
-      title: "定制封面",
-      url: "https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1",
-      target: "_blank",
+      name: "home",
+      title: "首页",
+      url: "/",
+      target: "_self",
+      active: pathname === "/",
     },
     {
-      name: "about",
-      title: "复盘",
-      url: "https://mp.weixin.qq.com/s/4AIX8tGxRENukXf1srnRBA",
-      target: "_blank",
-    },
-    {
-      name: "bisai",
-      title: "比赛",
-      url: "https://mp.weixin.qq.com/s/rUp58SBIQJfyvaWBgrpwJw",
-      target: "_blank",
+      name: "pricing",
+      title: "价格",
+      url: "/pricing",
+      target: "_self",
+      active: pathname === "/pricing",
     },
   ];
 
@@ -49,7 +45,9 @@ export default function () {
             <div className="hidden md:flex ml-16">
               {navigations.map((tab: Nav, idx: number) => (
                 <a
-                  className="text-md font-normal leading-6 text-gray-800 mx-4"
+                  className={`text-md font-normal leading-6 ${
+                    tab.active ? "text-primary" : "text-gray-800"
+                  } mx-4`}
                   key={idx}
                   href={tab.url}
                   target={tab.target}

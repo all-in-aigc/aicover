@@ -3,4 +3,5 @@ export interface Nav {
   name?: string;
   url?: string;
   target?: string;
+  active?: boolean;
 }
