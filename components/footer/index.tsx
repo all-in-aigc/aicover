@@ -62,6 +62,13 @@ export default function () {
               >
                 全栈开发课
               </a>
+              <a
+                href="https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1"
+                target="_blank"
+                className="font-inter font-light text-gray-500"
+              >
+                定制微信红包封面
+              </a>
             </div>
           </div>
           <div className="mt-10 flex flex-col lg:mt-0">

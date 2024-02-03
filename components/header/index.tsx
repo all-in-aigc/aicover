@@ -27,12 +27,6 @@ export default function () {
       target: "_self",
       active: pathname === "/pricing",
     },
-    {
-      name: "doc",
-      title: "定制封面",
-      url: "https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1",
-      target: "_blank",
-    },
   ];
 
   return (
