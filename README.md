@@ -79,6 +79,6 @@ open `http://localhost:3000` for preview
 
 you can contact me at Twitter: https://twitter.com/idoubicc
 
-if this project is helpful to you, buy be a coffee.
+if this project is helpful to you, buy me a coffee.
 
 <a href="https://www.buymeacoffee.com/idoubi" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
