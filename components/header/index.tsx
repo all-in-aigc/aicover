@@ -24,6 +24,13 @@ export default function () {
       target: "_self",
       active: pathname === "/pricing",
     },
+    {
+      name: "awesome",
+      title: "精品",
+      url: "/covers/awesome",
+      target: "_self",
+      active: pathname === "/covers/awesome",
+    },
   ];
 
   return (
