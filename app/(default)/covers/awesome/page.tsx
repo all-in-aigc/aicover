@@ -2,15 +2,15 @@ import Covers from "@/components/covers";
 
 export default function () {
   return (
-    <div className="w-full px-6">
-      <section className="max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl md:text-6xl font-bold text-primary mt-8 md:mt-24">
-          精品红包封面图
+    <div className="relative isolate bg-white px-6 py-8 md:py-16 lg:px-8">
+      <div className="mx-auto max-w-3xl text-center lg:max-w-4xl">
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-primary sm:text-6xl">
+          精品红包封面
         </h1>
-        <h2 className="text-2xl md:text-4xl my-8 text-secondary-foreground">
-          联系客服获取源文件
-        </h2>
-      </section>
+      </div>
+      <h2 className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
+        优质作者的精品创作
+      </h2>
       <Covers cate={"awesome"} showTab={false} />
     </div>
   );

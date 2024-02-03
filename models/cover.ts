@@ -45,7 +45,7 @@ export async function getCoversCount(): Promise<number> {
 export async function getUserCoversCount(user_email: string): Promise<number> {
   const db = getDb();
   const res = await db.query(
-    `SELECT count(1) as count FROM covers WHERE user_email = $1`,
+    `SELECT count(1) as count FROM covers WHERE user_email = $1 and is_uploaded is not true`,
     [user_email]
   );
   if (res.rowCount === 0) {
