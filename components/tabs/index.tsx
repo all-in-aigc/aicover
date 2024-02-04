@@ -7,7 +7,6 @@ export default function ({ cate }: { cate: string }) {
     { name: "最新", href: "/", current: cate === "" || cate === "latest" },
     { name: "最热", href: "/covers/featured", current: cate === "featured" },
     { name: "随机", href: "/covers/random", current: cate === "random" },
-    { name: "我的", href: "/covers/mine", current: cate === "mine" },
   ];
 
   return (

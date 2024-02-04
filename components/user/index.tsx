@@ -37,14 +37,14 @@ export default function ({ user }: Props) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuLabel className="text-center truncate">
-          <a href="/covers/mine">我的封面</a>
-        </DropdownMenuLabel>
+        <DropdownMenuCheckboxItem className="text-center truncate">
+          <a href={`/user/${user.uuid}/covers`}>我的封面</a>
+        </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
 
-        <DropdownMenuLabel className="text-center truncate">
+        <DropdownMenuCheckboxItem className="text-center truncate">
           <a href="/upload">上传封面</a>
-        </DropdownMenuLabel>
+        </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
 
         <DropdownMenuCheckboxItem className="md:hidden text-center">

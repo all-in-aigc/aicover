@@ -42,6 +42,9 @@ export default async function ({ params }: { params: { uuid: string } }) {
       </div>
     );
   }
+
+  const covers = await getRandomCovers(1, 60);
+
   return (
     <>
       {cover && (
@@ -72,7 +75,10 @@ export default async function ({ params }: { params: { uuid: string } }) {
 
                     <div className="sm:max-w-sm md:max-w-md lg:max-w-lg">
                       {cover.created_user && (
-                        <a className="group block flex-shrink-0">
+                        <a
+                          href={`/user/${cover.user_uuid}/covers`}
+                          className="group block flex-shrink-0"
+                        >
                           <div className="flex items-center">
                             <div>
                               <Avatar className="cursor-pointer">
@@ -156,7 +162,7 @@ export default async function ({ params }: { params: { uuid: string } }) {
               </h2>
 
               <div className="mb-8 grid w-full grid-cols-1 md:mb-12 md:grid-cols-1 md:gap-4 lg:mb-16">
-                <Covers cate="random" showTab={false} />
+                <Covers cate="random" covers={covers} showTab={false} />
               </div>
             </div>
           </div>
