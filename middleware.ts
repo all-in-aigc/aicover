@@ -19,7 +19,10 @@ export default authMiddleware({
         );
       } else {
         const url = new URL(req.url);
-        if (!url.pathname.startsWith("/cover/")) {
+        if (
+          !url.pathname.startsWith("/cover/") &&
+          !url.pathname.startsWith("/user/")
+        ) {
           return NextResponse.redirect(new URL("/sign-in", req.url));
         }
       }
