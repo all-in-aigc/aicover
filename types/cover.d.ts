@@ -14,4 +14,5 @@ export interface Cover {
   status: number;
   is_recommended?: boolean;
   user_uuid?: string;
+  app_tag?: string;
 }

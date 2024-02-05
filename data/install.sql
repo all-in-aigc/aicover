@@ -21,7 +21,8 @@ CREATE TABLE covers (
     uuid UUID UNIQUE NOT NULL,
     status INT,
     is_recommended BOOLEAN,
-    user_uuid UUID
+    user_uuid UUID,
+    app_tag VARCHAR(50)
 );
 
 CREATE TABLE orders (

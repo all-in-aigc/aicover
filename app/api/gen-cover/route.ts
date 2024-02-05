@@ -88,6 +88,7 @@ export async function POST(req: NextRequest) {
       uuid: img_uuid,
       status: 1,
       user_uuid: user_uuid,
+      app_tag: process.env.APP_TAG,
     };
     await insertCover(cover);
 

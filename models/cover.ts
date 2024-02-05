@@ -7,9 +7,9 @@ export async function insertCover(cover: Cover) {
   const db = getDb();
   const res = await db.query(
     `INSERT INTO covers 
-        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at, uuid, status, user_uuid) 
+        (user_email, img_description, img_size, img_url, llm_name, llm_params, created_at, uuid, status, user_uuid, app_tag) 
         VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     `,
     [
       cover.user_email,
@@ -22,6 +22,7 @@ export async function insertCover(cover: Cover) {
       cover.uuid,
       cover.status,
       cover.user_uuid,
+      cover.app_tag,
     ]
   );
 
@@ -225,6 +226,7 @@ export function formatCover(row: QueryResultRow): Cover | undefined {
     status: row.status,
     is_recommended: row.is_recommended,
     user_uuid: row.user_uuid,
+    app_tag: row.app_tag,
   };
 
   cover.created_user = {
