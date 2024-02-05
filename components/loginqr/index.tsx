@@ -15,7 +15,7 @@ export default () => {
     Cookie.set("user-token", value, {
       expires: 7,
       secure: true,
-      sameSite: "strict",
+      sameSite: "None",
     });
   };
 
