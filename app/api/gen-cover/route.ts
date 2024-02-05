@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const img_name = encodeURIComponent(description);
 
     let img_url = "";
-    if (process.env.COS_BUCKET) {
+    if (process.env.IMAGE_STORAGE === "cos") {
       const cos_img = await downloadAndUploadImageWithCos(
         raw_img_url,
         process.env.COS_BUCKET || "",
