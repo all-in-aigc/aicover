@@ -4,6 +4,7 @@ import { Cover } from "@/types/cover";
 import { ImageGenerateParams } from "openai/resources/images.mjs";
 import { currentUser } from "@clerk/nextjs";
 import { downloadAndUploadImage } from "@/lib/s3";
+import { downloadAndUploadImage as downloadAndUploadImageWithCos } from "@/lib/cos";
 import { findUserByEmail } from "@/models/user";
 import { genUuid } from "@/lib";
 import { getOpenAIClient } from "@/services/openai";
@@ -56,14 +57,29 @@ export async function POST(req: Request) {
       return respErr("generate cover failed");
     }
 
+    console.log("generate img_url:", raw_img_url);
+
     const img_uuid = genUuid();
     const img_name = encodeURIComponent(description);
-    const s3_img = await downloadAndUploadImage(
-      raw_img_url,
-      process.env.AWS_BUCKET || "trysai",
-      `covers/${img_uuid}.png`
-    );
-    const img_url = s3_img.Location;
+
+    let img_url = "";
+    if (process.env.COS_BUCKET) {
+      const cos_img = await downloadAndUploadImageWithCos(
+        raw_img_url,
+        process.env.COS_BUCKET || "",
+        `covers/${img_uuid}.png`
+      );
+      img_url = `https://${cos_img.Location}`;
+      console.log("upload to cos", img_url);
+    } else {
+      const s3_img = await downloadAndUploadImage(
+        raw_img_url,
+        process.env.AWS_BUCKET || "",
+        `covers/${img_uuid}.png`
+      );
+      img_url = s3_img.Location;
+      console.log("upload to aws s3", img_url);
+    }
 
     const cover: Cover = {
       user_email: user_email,
