@@ -37,6 +37,16 @@ export default function ({ user }: Props) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
+        <DropdownMenuCheckboxItem className="md:hidden text-center">
+          额度: {user.credits?.left_credits}
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuSeparator className="md:hidden" />
+
+        <DropdownMenuCheckboxItem className="md:hidden">
+          <a href="/pricing">付费方案</a>
+        </DropdownMenuCheckboxItem>
+        <DropdownMenuSeparator className="md:hidden" />
+
         <DropdownMenuCheckboxItem className="text-center truncate">
           <a href={`/user/${user.uuid}/covers`}>我的封面</a>
         </DropdownMenuCheckboxItem>
@@ -47,15 +57,15 @@ export default function ({ user }: Props) {
         </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
 
-        <DropdownMenuCheckboxItem className="md:hidden text-center">
-          额度: {user.credits?.left_credits}
+        <DropdownMenuCheckboxItem className="text-center truncate">
+          <a href={`/covers/awesome`}>精品专区</a>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuSeparator className="md:hidden" />
+        <DropdownMenuSeparator />
 
-        <DropdownMenuCheckboxItem className="md:hidden">
-          <a href="/pricing">价格</a>
+        <DropdownMenuCheckboxItem className="text-center truncate">
+          <a href={`/covers/brand`}>品牌案例</a>
         </DropdownMenuCheckboxItem>
-        <DropdownMenuSeparator className="md:hidden" />
+        <DropdownMenuSeparator />
 
         <DropdownMenuCheckboxItem>
           <SignOutButton signOutCallback={() => location.reload()}>
