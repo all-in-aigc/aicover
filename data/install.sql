@@ -21,7 +21,8 @@ CREATE TABLE covers (
     is_recommended BOOLEAN,
     user_uuid UUID,
     is_uploaded BOOLEAN,
-    is_awesome BOOLEAN
+    is_awesome BOOLEAN,
+    is_brand BOOLEAN
 );
 
 CREATE TABLE orders (

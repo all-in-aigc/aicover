@@ -16,4 +16,5 @@ export interface Cover {
   user_uuid?: string;
   is_uploaded?: boolean;
   is_awesome?: boolean;
+  is_brand?: boolean;
 }

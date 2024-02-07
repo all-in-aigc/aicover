@@ -31,6 +31,13 @@ export default function () {
       target: "_self",
       active: pathname === "/covers/awesome",
     },
+    {
+      name: "brand",
+      title: "品牌案例",
+      url: "/covers/brand",
+      target: "_self",
+      active: pathname === "/covers/brand",
+    },
   ];
 
   return (

@@ -109,6 +109,8 @@ export default async function ({ params }: { params: { uuid: string } }) {
                       <div className="text-sm text-[#636262] text-left">
                         {cover.is_awesome ? (
                           <Consult cover={cover} />
+                        ) : cover.is_brand ? (
+                          <Consult cover={cover} />
                         ) : (
                           <Download cover={cover} />
                         )}
@@ -128,6 +130,10 @@ export default async function ({ params }: { params: { uuid: string } }) {
                           >
                             定制你的红包封面👉
                           </a>
+                        </p>
+                      ) : cover.is_brand ? (
+                        <p className="text-slate-500 text-sm py-8">
+                          添加客服微信，描述你的需求，我们安排专业的设计师给你定制品牌红包封面。
                         </p>
                       ) : (
                         <p className="text-slate-500 text-sm py-8">
