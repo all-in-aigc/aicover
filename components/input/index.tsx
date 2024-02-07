@@ -77,7 +77,7 @@ export default function () {
       if (data) {
         console.log("new cover", data);
         // setCovers((covers: Cover[]) => [data, ...covers]);
-        router.push("/covers/mine");
+        router.push(`/covers/${data.uuid}`);
       }
     } catch (e) {
       console.log("gen cover failed", e);

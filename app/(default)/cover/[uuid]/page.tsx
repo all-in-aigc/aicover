@@ -66,7 +66,10 @@ export default async function ({ params }: { params: { uuid: string } }) {
 
                     <div className="sm:max-w-sm md:max-w-md lg:max-w-lg">
                       {cover.created_user && (
-                        <a className="group block flex-shrink-0">
+                        <a
+                          href={`/user/${cover.user_uuid}/covers`}
+                          className="group block flex-shrink-0"
+                        >
                           <div className="flex items-center">
                             <div>
                               <Avatar className="cursor-pointer">

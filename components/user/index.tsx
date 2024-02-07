@@ -37,14 +37,14 @@ export default function ({ user }: Props) {
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mx-4">
-        <DropdownMenuLabel className="text-center truncate">
+        <DropdownMenuCheckboxItem className="text-center truncate">
           {user.nickname ? user.nickname : "匿名用户"}
-        </DropdownMenuLabel>
+        </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
 
-        <DropdownMenuLabel className="text-center truncate">
-          <a href="/covers/mine">我的封面</a>
-        </DropdownMenuLabel>
+        <DropdownMenuCheckboxItem className="text-center truncate">
+          <a href={`/user/${user.uuid}/covers`}>我的封面</a>
+        </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
 
         <DropdownMenuCheckboxItem className="md:hidden text-center">

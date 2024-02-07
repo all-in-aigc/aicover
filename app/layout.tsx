@@ -27,8 +27,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Toaster position="top-center" richColors />
         {children}
-        <Analytics />
-        {/* <script
+        {/* <Analytics /> */}
+        <script
           dangerouslySetInnerHTML={{
             __html: `
           var _hmt = _hmt || [];
@@ -40,7 +40,7 @@ export default function RootLayout({
         })();
           `,
           }}
-        ></script> */}
+        ></script>
       </body>
     </html>
   );
