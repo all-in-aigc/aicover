@@ -31,6 +31,13 @@ export default function () {
       target: "_self",
       active: pathname === "/covers/awesome",
     },
+    {
+      name: "cases",
+      title: "优秀案例",
+      url: "/cases",
+      target: "_self",
+      active: pathname === "/cases"
+    }
   ];
 
   return (

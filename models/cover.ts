@@ -31,6 +31,7 @@ export async function insertCover(cover: Cover) {
 
 export async function getCoversCount(): Promise<number> {
   const db = getDb();
+  return 0;
   const res = await db.query(`SELECT count(1) as count FROM covers`);
   if (res.rowCount === 0) {
     return 0;
@@ -127,6 +128,7 @@ export async function getCovers(page: number, limit: number): Promise<Cover[]> {
   const offset = (page - 1) * limit;
 
   const db = getDb();
+  return []
   const res = await db.query(
     `select w.*, u.uuid as user_uuid, u.email as user_email, u.nickname as user_name, u.avatar_url as user_avatar from covers as w left join users as u on w.user_email = u.email where w.status = 1 order by w.created_at desc limit $1 offset $2`,
     [limit, offset]

@@ -5,6 +5,7 @@ export default authMiddleware({
   publicRoutes: [
     "/",
     "/pricing",
+    "/cases",
     "/covers/awesome",
     "/api/get-covers",
     "/api/get-user-info",
