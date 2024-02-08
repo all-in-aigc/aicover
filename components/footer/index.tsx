@@ -67,14 +67,14 @@ export default function () {
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
-                项目复盘
+                AI 红包封面开发故事
               </a>
               <a
                 href="https://cover.weixin.qq.com/cgi-bin/mmcover-bin/readtemplate?t=page/index#/doc?page=design&index=-1"
                 target="_blank"
                 className="font-inter font-light text-gray-500"
               >
-                定制微信红包封面
+                微信红包封面制作教程
               </a>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import Consult from "../consult";
 import { Cover } from "@/types/cover";
 import Image from "next/image";
 import Tabs from "@/components/tabs";
@@ -52,6 +53,12 @@ export default async function ({
             </>
           )}
         </div>
+
+        {cate === "brand" && (
+          <div className="text-center mt-8">
+            <Consult />
+          </div>
+        )}
       </div>
     </section>
   );

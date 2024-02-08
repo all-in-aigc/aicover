@@ -6,6 +6,7 @@ export default authMiddleware({
     "/",
     "/pricing",
     "/covers/awesome",
+    "/covers/brand",
     "/api/get-covers",
     "/api/get-user-info",
   ],
